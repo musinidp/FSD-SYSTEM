@@ -1,5 +1,5 @@
 {
-  "name": "Night FSD Developer",
+  "name": "FOG SAFETY DEVICE",
   "description": "Indian Railways Fog Signal Device (FSD) Lobby Management System with an AI-powered Python code and API documentation generator assistant.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

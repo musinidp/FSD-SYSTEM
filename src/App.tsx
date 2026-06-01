@@ -20,19 +20,17 @@ import {
   RefreshCw,
   PlusCircle,
   Trash2,
-  Sparkles,
   Database,
   Calendar,
   Clock,
   Check,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Layers
 } from "lucide-react";
-import AICodeAssistant from "./components/AICodeAssistant";
 import { Lobby, CrewController, FSDDevice, LocoPilot, AssistantLocoPilot, OpsRecord } from "./types";
 
 export default function App() {
   // Global States
-  const [activeTab, setActiveTab] = useState<"operating" | "dev">("operating");
   const [utcTime, setUtcTime] = useState<string>("");
 
   // DB Sync state
@@ -560,10 +558,10 @@ export default function App() {
           {/* Logo & Railway metadata with Sophisticated Dark signatures */}
           <div className="flex items-center gap-3.5 flex-wrap">
             <div className="flex items-center space-x-2 mr-1">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
-              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
-              <span className="ml-2 font-serif italic text-neutral-100 text-lg tracking-tight leading-none">Night FSD</span>
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500/90 led-pulse-red" title="Railway Red Signal - Defect Lockout Pending"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-amber-500/90 led-pulse-yellow" title="Railway Caution Warning - Operating Runs Active"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/90 led-pulse-green" title="Railway Proceed Green - Healthy Inventory Pool Ready"></div>
+              <span className="ml-2 font-serif italic text-neutral-100 text-lg tracking-tight leading-none">FOG SAFETY DEVICE</span>
             </div>
             
             <div className="h-6 w-[1px] bg-neutral-800 hidden md:block mx-2"></div>
@@ -580,7 +578,7 @@ export default function App() {
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               </div>
               <h1 className="font-serif italic text-base md:text-lg text-white tracking-tight leading-tight mt-0.5">
-                Night FSD Lobby Management System & Developer Co-Pilot
+                FOG SAFETY DEVICE
               </h1>
             </div>
           </div>
@@ -593,33 +591,7 @@ export default function App() {
               <span className="tracking-widest">{utcTime || "LOADING SYSTEM TIME..."}</span>
             </div>
 
-            {/* Mode Swapper Button */}
-            <div className="p-1 bg-neutral-900 rounded-xl border border-rail-border flex gap-1">
-              <button
-                type="button"
-                onClick={() => setActiveTab("operating")}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                  activeTab === "operating"
-                    ? "bg-neutral-800 border border-neutral-700 text-neutral-100 shadow-md shadow-black/40"
-                    : "text-neutral-500 hover:text-neutral-300"
-                }`}
-              >
-                <Terminal className="w-3.5 h-3.5 text-neutral-400" />
-                <span>Operating Cabin</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("dev")}
-                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold tracking-wider uppercase transition-all duration-300 ${
-                  activeTab === "dev"
-                    ? "bg-neutral-800 border border-emerald-500/40 text-emerald-400 shadow-md shadow-black/40"
-                    : "text-neutral-500 hover:text-neutral-300"
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                <span>AI Developer Lab</span>
-              </button>
-            </div>
+
           </div>
 
         </div>
@@ -662,14 +634,11 @@ export default function App() {
         </AnimatePresence>
 
         {/* Dynamic Route Switching View */}
-        {activeTab === "dev" ? (
-          <AICodeAssistant currentLobbyCode={selectedLobby ? selectedLobby.lobby_code : null} />
-        ) : (
-          <div className="w-full">
+        <div className="w-full">
             
             {/* CABINET VIEW 1: LOBBY SELECT */}
             {cabinetMode === "lobby" && (
-              <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border p-6 md:p-8 shadow-2xl relative">
+              <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border border-glow-emerald p-6 md:p-8 shadow-2xl relative">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none"></div>
 
                 <div className="text-center mb-8">
@@ -968,7 +937,7 @@ export default function App() {
               <div className="w-full my-4">
                 
                 {!isCCLoggedIn ? (
-                  <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border p-6 shadow-2xl">
+                  <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border border-glow-amber p-6 shadow-2xl">
                     <div className="text-center mb-6">
                       <div className="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto mb-3">
                         <Cpu className="w-6 h-6 text-amber-500" />
@@ -1364,7 +1333,7 @@ export default function App() {
               <div className="w-full my-4">
                 
                 {!isAdminLoggedIn ? (
-                  <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border p-6 shadow-2xl">
+                  <div className="max-w-md mx-auto my-12 bg-rail-panel rounded-2xl border border-rail-border border-glow-rose p-6 shadow-2xl">
                     <div className="text-center mb-6">
                       <div className="w-12 h-12 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center mx-auto mb-3">
                         <Lock className="w-6 h-6 text-rose-500" />
@@ -1962,9 +1931,102 @@ export default function App() {
               </div>
             )}
 
+            {/* Premium Live Master HUD Dashboard Block (Bottom Stats) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 pt-6 border-t border-rail-border/40">
+              {/* Card 1: Registered Lobbies */}
+              <div className="bg-rail-panel border border-rail-border hover:border-glow-emerald rounded-2xl p-5 shadow-lg relative overflow-hidden group transition duration-300">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/[0.02] rounded-full blur-xl group-hover:bg-emerald-500/[0.05] transition duration-300"></div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono tracking-widest text-neutral-450 uppercase font-semibold">
+                      DEPO STATIONS
+                    </span>
+                    <h3 className="text-2xl font-mono font-extrabold text-white mt-1.5">
+                      {lobbies.length.toString().padStart(2, "0")}
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+                    <Layers className="w-5 h-5 text-neutral-400 group-hover:scale-110 transition duration-300" />
+                  </div>
+                </div>
+                <p className="text-[10.5px] text-neutral-500 mt-2 font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>Active division hubs mapped</span>
+                </p>
+              </div>
+
+              {/* Card 2: Active Trains Trips */}
+              <div className="bg-rail-panel border border-rail-border hover:border-glow-amber rounded-2xl p-5 shadow-lg relative overflow-hidden group transition duration-300">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/[0.02] rounded-full blur-xl group-hover:bg-amber-500/[0.05] transition duration-300"></div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono tracking-widest text-emerald-400 uppercase font-semibold">
+                      ACTIVE RUNS
+                    </span>
+                    <h3 className="text-2xl font-mono font-extrabold text-emerald-400 mt-1.5">
+                      {ledger.filter((op) => !op.hoc_time).length.toString().padStart(2, "0")}
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center relative">
+                    <Train className="w-5 h-5 text-emerald-400 group-hover:scale-110 transition duration-300" />
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 led-pulse-green"></span>
+                  </div>
+                </div>
+                <p className="text-[10.5px] text-neutral-500 mt-2 font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+                  <span>Crews on-duty with FSD</span>
+                </p>
+              </div>
+
+              {/* Card 3: Deployable FSD Units */}
+              <div className="bg-rail-panel border border-rail-border hover:border-glow-emerald rounded-2xl p-5 shadow-lg relative overflow-hidden group transition duration-300">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-emerald-500/[0.02] rounded-full blur-xl group-hover:bg-emerald-500/[0.05] transition duration-300"></div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono tracking-widest text-neutral-450 uppercase font-semibold">
+                      HEALTHY ASSETS
+                    </span>
+                    <h3 className="text-2xl font-mono font-extrabold text-white mt-1.5">
+                      {inventory.filter((f) => f.status === "Available").length.toString().padStart(2, "0")}
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center">
+                    <HardDrive className="w-5 h-5 text-neutral-400 group-hover:scale-110 transition duration-300" />
+                  </div>
+                </div>
+                <p className="text-[10.5px] text-neutral-500 mt-2 font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>FSD devices in available pool</span>
+                </p>
+              </div>
+
+              {/* Card 4: Locked/Maintenance Units */}
+              <div className="bg-rail-panel border border-rail-border hover:border-glow-rose rounded-2xl p-5 shadow-lg relative overflow-hidden group transition duration-300">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-rose-500/[0.02] rounded-full blur-xl group-hover:bg-rose-500/[0.05] transition duration-300"></div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-mono tracking-widest text-[#f87171] uppercase font-semibold">
+                      LOCKED MODULES
+                    </span>
+                    <h3 className="text-2xl font-mono font-extrabold text-[#f1f5f9] mt-1.5">
+                      {inventory.filter((f) => f.status === "Locked").length.toString().padStart(2, "0")}
+                    </h3>
+                  </div>
+                  <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center relative">
+                    <AlertTriangle className="w-5 h-5 text-red-400 group-hover:scale-110 transition duration-300" />
+                    {inventory.filter((f) => f.status === "Locked").length > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-red-500 led-pulse-red"></span>
+                    )}
+                  </div>
+                </div>
+                <p className="text-[10.5px] text-neutral-500 mt-2 font-mono flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+                  <span>Awaiting CC technicians release</span>
+                </p>
+              </div>
+            </div>
 
           </div>
-        )}
 
       </main>
 

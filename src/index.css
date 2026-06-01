@@ -7,12 +7,84 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "JetBrains Mono", monospace;
   
-  --color-rail-dark: #0a0a0a;
-  --color-rail-panel: #171717;
-  --color-rail-border: #262626;
+  --color-rail-dark: #050507;
+  --color-rail-panel: #0d0e12;
+  --color-rail-border: #1e2230;
   --color-rail-signal-green: #10b981;
   --color-rail-signal-yellow: #f59e0b;
   --color-rail-signal-red: #ef4444;
-  --color-rail-glow: #34d399; /* emerald accent */
-  --color-rail-accent: #525252; /* elegant neutral medium accent */
+  --color-rail-glow: #10b981; /* emerald accent */
+  --color-rail-accent: #2e303f; /* elegant neutral medium accent */
 }
+
+/* Premium Railway Tactical Custom Utilities & Graphics */
+@layer base {
+  body {
+    background-color: #050507;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.03) 0%, transparent 40%),
+      radial-gradient(rgba(255, 255, 255, 0.012) 1.2px, transparent 1.2px);
+    background-size: 100% 100%, 100% 100%, 24px 24px;
+    background-attachment: fixed;
+    color: #f1f5f9;
+  }
+
+  /* Thin premium developer scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #050507;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e2230;
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+  }
+}
+
+@utility led-pulse-green {
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4), inset 0 0 4px rgba(16, 185, 129, 0.6);
+  animation: led-glow-anim 2s infinite ease-in-out;
+}
+
+@utility led-pulse-yellow {
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4), inset 0 0 4px rgba(245, 158, 11, 0.6);
+  animation: led-glow-anim 2s infinite ease-in-out;
+}
+
+@utility led-pulse-red {
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.4), inset 0 0 4px rgba(239, 68, 68, 0.6);
+  animation: led-glow-anim 2s infinite ease-in-out;
+}
+
+@utility border-glow-emerald {
+  border-color: rgba(16, 185, 129, 0.25);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.08);
+}
+
+@utility border-glow-amber {
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.08);
+}
+
+@utility border-glow-rose {
+  border-color: rgba(239, 68, 68, 0.25);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.08);
+}
+
+@keyframes led-glow-anim {
+  0%, 100% {
+    opacity: 0.8;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.3);
+  }
+}
+

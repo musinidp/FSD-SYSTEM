@@ -1,0 +1,73 @@
+{
+  "lobbies": [
+    {"lobby_code": "GNT", "lobby_name": "Guntur Station Lobby"},
+    {"lobby_code": "BZA", "lobby_name": "Vijayawada Junction Lobby"},
+    {"lobby_code": "SC", "lobby_name": "Secunderabad Station Lobby"},
+    {"lobby_code": "HYB", "lobby_name": "Hyderabad Deccan Lobby"}
+  ],
+  "controllers": [
+    {"cc_id": "GNTCC4311", "lobby_code": "GNT", "name": "R. K. Prasad", "mobile": "9848024311"},
+    {"cc_id": "BZACC8922", "lobby_code": "BZA", "name": "S. Srinivasan", "mobile": "9440128922"},
+    {"cc_id": "SCCC1044", "lobby_code": "SC", "name": "K. Jagesh", "mobile": "9110281044"}
+  ],
+  "fsd_inventory": [
+    {"serial_no": "FSD-A101", "unit_no": "UNIT-X1", "lobby_code": "GNT", "status": "Available", "current_lp": "", "current_alp": "", "rectification_date": "", "repair_notes": ""},
+    {"serial_no": "FSD-A102", "unit_no": "UNIT-X2", "lobby_code": "GNT", "status": "Available", "current_lp": "", "current_alp": "", "rectification_date": "", "repair_notes": ""},
+    {"serial_no": "FSD-B201", "unit_no": "UNIT-Y1", "lobby_code": "BZA", "status": "Available", "current_lp": "", "current_alp": "", "rectification_date": "", "repair_notes": ""},
+    {"serial_no": "FSD-B202", "unit_no": "UNIT-Y2", "lobby_code": "BZA", "status": "Locked", "current_lp": "", "current_alp": "", "rectification_date": "2026-05-28 11:20:00", "repair_notes": "Heavy physical damage during night run GNT-BZA, casing replaced"},
+    {"serial_no": "FSD-C301", "unit_no": "UNIT-Z1", "lobby_code": "SC", "status": "Available", "current_lp": "", "current_alp": "", "rectification_date": "", "repair_notes": ""},
+    {"serial_no": "FSD-C302", "unit_no": "UNIT-Z2", "lobby_code": "SC", "status": "Locked", "current_lp": "", "current_alp": "", "rectification_date": "", "repair_notes": "Battery level dipping below 10% on short run, needs replacement"}
+  ],
+  "lp_master": [
+    {"lp_id": "LP001", "lp_name": "CHANDRA SHEKHAR", "lobby_code": "GNT"},
+    {"lp_id": "LP002", "lp_name": "VIJAY KUMAR", "lobby_code": "GNT"},
+    {"lp_id": "LP003", "lp_name": "M. S. RAO", "lobby_code": "BZA"},
+    {"lp_id": "LP004", "lp_name": "P. CHIDAMBARAM", "lobby_code": "BZA"},
+    {"lp_id": "LP005", "lp_name": "S. K. NAYAK", "lobby_code": "SC"},
+    {"lp_id": "LP006", "lp_name": "RAMESH BABU", "lobby_code": "SC"}
+  ],
+  "alp_master": [
+    {"alp_id": "ALP001", "alp_name": "SANJAY DUTT", "lobby_code": "GNT"},
+    {"alp_id": "ALP002", "alp_name": "AMITABH BACHCHAN", "lobby_code": "GNT"},
+    {"alp_id": "ALP003", "alp_name": "RAJNIKANTH S.", "lobby_code": "BZA"},
+    {"alp_id": "ALP004", "alp_name": "KAMAL HAASAN", "lobby_code": "BZA"},
+    {"alp_id": "ALP005", "alp_name": "MAHESH BABU", "lobby_code": "SC"},
+    {"alp_id": "ALP006", "alp_name": "ALLU ARJUN", "lobby_code": "SC"}
+  ],
+  "operations_ledger": [
+    {
+      "id": 1,
+      "lobby_code": "GNT",
+      "fsd_serial": "FSD-A101",
+      "fsd_unit": "UNIT-X1",
+      "lp_id": "LP001",
+      "lp_name": "CHANDRA SHEKHAR",
+      "alp_id": "ALP001",
+      "alp_name": "SANJAY DUTT",
+      "train_no": "12704",
+      "toc_time": "2026-05-30 22:30:00",
+      "toc_status": "Completed",
+      "hoc_time": "2026-05-31 06:15:00",
+      "hoc_remarks": "Working Fine",
+      "detonator_no": "DET-121",
+      "hoc_notes": "FSD fully functional, returned box without any detonation events."
+    },
+    {
+      "id": 2,
+      "lobby_code": "BZA",
+      "fsd_serial": "FSD-B202",
+      "fsd_unit": "UNIT-Y2",
+      "lp_id": "LP003",
+      "lp_name": "M. S. RAO",
+      "alp_id": "ALP003",
+      "alp_name": "RAJNIKANTH S.",
+      "train_no": "12759",
+      "toc_time": "2026-05-31 01:10:00",
+      "toc_status": "Active_Track",
+      "hoc_time": "2026-05-31 08:30:00",
+      "hoc_remarks": "GPS not working",
+      "detonator_no": "DET-904",
+      "hoc_notes": "Unit status is showing constant GPS packet drop after crossing Godavari bridge."
+    }
+  ]
+}

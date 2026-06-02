@@ -232,6 +232,70 @@ export default function App() {
     }
   };
 
+  const handleDeleteLobby = async (code: string) => {
+    if (!window.confirm(`Are you sure you want to delete Lobby Depot [${code}]?`)) return;
+    try {
+      const res = await fetch(`/api/fsd/lobbies/${code}`, { method: "DELETE" });
+      if (res.ok) {
+        triggerToast("success", `Lobby Depot [${code}] successfully deleted.`);
+        syncAllData();
+      } else {
+        const data = await res.json();
+        triggerToast("error", data.error || "Failed blueprint deletion.");
+      }
+    } catch (err) {
+      triggerToast("error", "Server communication failed.");
+    }
+  };
+
+  const handleDeleteFsd = async (serialNo: string) => {
+    if (!window.confirm(`Are you sure you want to delete FSD Device [${serialNo}]?`)) return;
+    try {
+      const res = await fetch(`/api/fsd/inventory/${serialNo}`, { method: "DELETE" });
+      if (res.ok) {
+        triggerToast("success", `FSD Device [${serialNo}] successfully deleted.`);
+        syncAllData();
+      } else {
+        const data = await res.json();
+        triggerToast("error", data.error || "Failed register deletion.");
+      }
+    } catch (err) {
+      triggerToast("error", "Server communication failed.");
+    }
+  };
+
+  const handleDeleteLP = async (id: string) => {
+    if (!window.confirm(`Are you sure you want to delete Loco Pilot ID [${id}]?`)) return;
+    try {
+      const res = await fetch(`/api/fsd/crew/lp/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        triggerToast("success", `Loco Pilot [${id}] successfully deleted.`);
+        syncAllData();
+      } else {
+        const data = await res.json();
+        triggerToast("error", data.error || "Failed roster deletion.");
+      }
+    } catch (err) {
+      triggerToast("error", "Server communication failed.");
+    }
+  };
+
+  const handleDeleteALP = async (id: string) => {
+    if (!window.confirm(`Are you sure you want to delete Assistant Loco Pilot ID [${id}]?`)) return;
+    try {
+      const res = await fetch(`/api/fsd/crew/alp/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        triggerToast("success", `Assistant Loco Pilot [${id}] successfully deleted.`);
+        syncAllData();
+      } else {
+        const data = await res.json();
+        triggerToast("error", data.error || "Failed roster deletion.");
+      }
+    } catch (err) {
+      triggerToast("error", "Server communication failed.");
+    }
+  };
+
   const handleLinkFsd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fsdFormSerial.trim() || !fsdFormUnit.trim() || !fsdFormLobby) {
@@ -1480,9 +1544,10 @@ export default function App() {
                             <div className="border border-rail-border rounded-xl overflow-hidden">
                               <table className="w-full text-left text-xs font-mono">
                                 <thead className="bg-neutral-950 text-neutral-400 uppercase border-b border-rail-border font-mono text-[9px] tracking-wider">
-                                  <tr>
+                                                                  <tr>
                                     <th className="p-3 pl-5">Lobby Code</th>
                                     <th className="p-3">Lobby Name Details</th>
+                                    <th className="p-3 text-right pr-5">Disposal Controls</th>
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-rail-border/60 bg-neutral-950/10">
@@ -1490,6 +1555,16 @@ export default function App() {
                                     <tr key={l.lobby_code} className="hover:bg-neutral-950/40 transition">
                                       <td className="p-3 pl-5 font-bold text-emerald-400">{l.lobby_code}</td>
                                       <td className="p-3 text-slate-300">{l.lobby_name}</td>
+                                      <td className="p-3 text-right pr-5">
+                                        <button
+                                          type="button"
+                                          onClick={() => handleDeleteLobby(l.lobby_code)}
+                                          className="p-1 text-red-400 hover:text-red-500 hover:bg-red-950/20 rounded transition"
+                                          title="Delete Lobby Node"
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </button>
+                                      </td>
                                     </tr>
                                   ))}
                                 </tbody>
@@ -1680,7 +1755,8 @@ export default function App() {
                                     <th className="p-3 pl-5">Serial No</th>
                                     <th className="p-3">Unit No</th>
                                     <th className="p-3">Assigned sector</th>
-                                    <th className="p-3 text-right pr-5">Active Status code</th>
+                                    <th className="p-3">Active Status code</th>
+                                    <th className="p-3 text-right pr-5">Disposal Controls</th>
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-rail-border/60 bg-neutral-950/10">
@@ -1689,7 +1765,7 @@ export default function App() {
                                       <td className="p-3 pl-5 font-bold text-slate-100">{f.serial_no}</td>
                                       <td className="p-3 text-slate-350">{f.unit_no}</td>
                                       <td className="p-3 text-slate-450 font-bold">{f.lobby_code}</td>
-                                      <td className="p-3 text-right pr-5">
+                                      <td className="p-3">
                                         <span className={`inline-block px-2.5 py-1 text-[9.5px] font-bold rounded uppercase font-mono border ${
                                           f.status === "Available"
                                             ? "border-emerald-900 bg-emerald-950/30 text-emerald-300"
@@ -1699,6 +1775,16 @@ export default function App() {
                                         }`}>
                                           {f.status}
                                         </span>
+                                      </td>
+                                      <td className="p-3 text-right pr-5">
+                                        <button
+                                          type="button"
+                                          onClick={() => handleDeleteFsd(f.serial_no)}
+                                          className="p-1 text-red-400 hover:text-red-500 hover:bg-red-950/20 rounded transition"
+                                          title="Delete FSD Device"
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </button>
                                       </td>
                                     </tr>
                                   ))}
@@ -1878,7 +1964,8 @@ export default function App() {
                                     <tr>
                                       <th className="p-3 pl-4">LP ID</th>
                                       <th className="p-3">Full Name</th>
-                                      <th className="p-3 pr-4">Lobby</th>
+                                      <th className="p-3">Lobby</th>
+                                      <th className="p-3 text-right pr-4">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody className="divide-y divide-rail-border/60 bg-neutral-950/10">
@@ -1886,7 +1973,17 @@ export default function App() {
                                       <tr key={l.lp_id} className="hover:bg-neutral-950/40 transition">
                                         <td className="p-3 pl-4 font-bold text-slate-200">{l.lp_id}</td>
                                         <td className="p-3 text-slate-300">{l.lp_name}</td>
-                                        <td className="p-3 pr-4 text-emerald-400 font-bold">{l.lobby_code}</td>
+                                        <td className="p-3 text-emerald-400 font-bold">{l.lobby_code}</td>
+                                        <td className="p-3 text-right pr-4">
+                                          <button
+                                            type="button"
+                                            onClick={() => handleDeleteLP(l.lp_id)}
+                                            className="p-1 text-red-400 hover:text-red-500 hover:bg-red-950/20 rounded transition"
+                                            title="Delete Loco Pilot"
+                                          >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                          </button>
+                                        </td>
                                       </tr>
                                     ))}
                                   </tbody>
@@ -1904,7 +2001,8 @@ export default function App() {
                                     <tr>
                                       <th className="p-3 pl-4">ALP ID</th>
                                       <th className="p-3">Full Name</th>
-                                      <th className="p-3 pr-4">Lobby</th>
+                                      <th className="p-3">Lobby</th>
+                                      <th className="p-3 text-right pr-4">Action</th>
                                     </tr>
                                   </thead>
                                   <tbody className="divide-y divide-rail-border/60 bg-neutral-950/10">
@@ -1912,7 +2010,17 @@ export default function App() {
                                       <tr key={l.alp_id} className="hover:bg-neutral-950/40 transition">
                                         <td className="p-3 pl-4 font-bold text-slate-200">{l.alp_id}</td>
                                         <td className="p-3 text-slate-305">{l.alp_name}</td>
-                                        <td className="p-3 pr-4 text-emerald-400 font-bold">{l.lobby_code}</td>
+                                        <td className="p-3 text-emerald-400 font-bold">{l.lobby_code}</td>
+                                        <td className="p-3 text-right pr-4">
+                                          <button
+                                            type="button"
+                                            onClick={() => handleDeleteALP(l.alp_id)}
+                                            className="p-1 text-red-400 hover:text-red-500 hover:bg-red-950/20 rounded transition"
+                                            title="Delete Assistant Loco Pilot"
+                                          >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                          </button>
+                                        </td>
                                       </tr>
                                     ))}
                                   </tbody>

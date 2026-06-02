@@ -136,6 +136,18 @@ app.delete("/api/fsd/controllers/:id", (req, res) => {
   res.json({ message: "Controller registry key revoked." });
 });
 
+app.delete("/api/fsd/lobbies/:code", (req, res) => {
+  const { code } = req.params;
+  const db = readDatabase();
+  const index = db.lobbies.findIndex((l: any) => l.lobby_code === code.toUpperCase());
+  if (index === -1) {
+    return res.status(404).json({ error: "Lobby code not found in registry." });
+  }
+  db.lobbies.splice(index, 1);
+  writeDatabase(db);
+  res.json({ message: "Lobby deleted successfully." });
+});
+
 // 3. FSD Inventory CRUD
 app.get("/api/fsd/inventory", (req, res) => {
   const db = readDatabase();
@@ -173,6 +185,18 @@ app.post("/api/fsd/inventory", (req, res) => {
 
   writeDatabase(db);
   res.json({ message: "FSD hardware parameters linked cleanly.", device: fsdObj });
+});
+
+app.delete("/api/fsd/inventory/:serial_no", (req, res) => {
+  const { serial_no } = req.params;
+  const db = readDatabase();
+  const index = db.fsd_inventory.findIndex((f: any) => f.serial_no === serial_no.toUpperCase());
+  if (index === -1) {
+    return res.status(404).json({ error: "FSD Serial profile not found." });
+  }
+  db.fsd_inventory.splice(index, 1);
+  writeDatabase(db);
+  res.json({ message: "FSD hardware asset successfully removed." });
 });
 
 // 4. LP and ALP Master Directories with bulk upload support
@@ -282,6 +306,30 @@ app.post("/api/fsd/crew/alp/bulk", (req, res) => {
   });
   writeDatabase(db);
   res.json({ message: `Bulk upload completed. Registered/Updated ${count} Assistant LPs.` });
+});
+
+app.delete("/api/fsd/crew/lp/:id", (req, res) => {
+  const { id } = req.params;
+  const db = readDatabase();
+  const index = db.lp_master.findIndex((l: any) => l.lp_id === id.toUpperCase());
+  if (index === -1) {
+    return res.status(404).json({ error: "Loco Pilot profile ID not found." });
+  }
+  db.lp_master.splice(index, 1);
+  writeDatabase(db);
+  res.json({ message: "Loco Pilot roster line deleted." });
+});
+
+app.delete("/api/fsd/crew/alp/:id", (req, res) => {
+  const { id } = req.params;
+  const db = readDatabase();
+  const index = db.alp_master.findIndex((a: any) => a.alp_id === id.toUpperCase());
+  if (index === -1) {
+    return res.status(404).json({ error: "Assistant Loco Pilot profile ID not found." });
+  }
+  db.alp_master.splice(index, 1);
+  writeDatabase(db);
+  res.json({ message: "Assistant Loco Pilot roster line deleted." });
 });
 
 // 5. Operations: Identity Verification check
